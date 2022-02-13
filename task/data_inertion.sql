@@ -15,7 +15,7 @@ insert into City values
 	('Ìîãèë¸â',357404),
 	('Ãðîäíî',357510)
 
-insert into Social_status values
+insert into SocialStatus values
 	('Ïåíñèîíåð'),
 	('Èíâàëèä'),
 	('Áåçðàáîòíûé'),
@@ -53,7 +53,7 @@ insert into Account values
 	(5,8,5,9848,'78945631'),
 	(5,10,5,301,'01233210')
 
-insert into Card_account values
+insert into CardAccount values
 (1,500,'1111222233334444'),
 (1,1002,'1234567891011121'),
 (2,201,'7894561232165498'),
