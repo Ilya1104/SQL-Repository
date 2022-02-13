@@ -1,5 +1,5 @@
 use db
 go
-select acc_id,  surname,client_name,patronymic, Account.balance - (sum(Card_account.balance)) as Available_funds
-from Client join Account on Client.client_id=Account.client_id join Card_account on Account.acc_id=Card_account.account_id
-group by acc_id, Account.balance,surname,client_name,patronymic
+select Account.Id,  Client.Surname,Client.Name,patronymic, Account.balance - (sum(CardAccount.balance)) as Available_funds
+from Client join Account on Client.Id=Account.ClientId join CardAccount on Account.Id=CardAccount.AccountId 
+group by Account.Id, Account.balance,Client.Surname,Client.Name,Client.Patronymic
