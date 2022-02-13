@@ -27,7 +27,7 @@ create table Client
 	Age int check((age > 0) and (age >= 16))  not null,
 	PhoneNumber nvarchar(20)
 )
-create table Social_status
+create table SocialStatus
 (
 	Id int primary key identity(1,1),
 	Name nvarchar(20)
@@ -41,7 +41,7 @@ create table Account
 	balance money not null default(0) check(balance >= 0),
 	Number nvarchar(20) not null
 )
-create table Card_account
+create table CardAccount
 (
 	Id int primary key identity(1,1),
 	AccountId int foreign key references Account(Id),
