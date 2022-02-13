@@ -2,49 +2,49 @@ use db
 go
 create table Bank
 (
-	bank_id int primary key identity(1,1),
-	bankName nvarchar(50)
+	Id int primary key identity(1,1),
+	Name nvarchar(50)
 )
 create table City
 (
-	city_id int primary key identity(1,1),
-	city_name nvarchar(20),
-	citizen_count int
+	Id int primary key identity(1,1),
+	Name nvarchar(50),
+	CitizenCount int
 )
 create table Filial
 (
-	id_filial int primary key identity(1,1),
-	bank_id int not null foreign key references Bank(bank_id),
-	city_id int not null foreign key references City(city_id),
-	adress nvarchar(30) not null
+	Id int primary key identity(1,1),
+	BankId int not null foreign key references Bank(Id),
+	CityId int not null foreign key references City(Id),
+	Adress nvarchar(30) not null
 )
 create table Client
 (
-	client_id int primary key identity(1,1),
-	surname nvarchar(20),
-	client_name nvarchar(20),
-	patronymic nvarchar(20),
-	age int check((age > 0) and (age >= 16))  not null,
-	phone_number nvarchar(20)
+	Id int primary key identity(1,1),
+	Surname nvarchar(20),
+	Name nvarchar(20),
+	Patronymic nvarchar(20),
+	Age int check((age > 0) and (age >= 16))  not null,
+	PhoneNumber nvarchar(20)
 )
 create table Social_status
 (
-	status_id int primary key identity(1,1),
-	status_name nvarchar(20)
+	Id int primary key identity(1,1),
+	Name nvarchar(20)
 )
 create table Account
 (
-	acc_id int primary key identity(1,1),
-	client_id int not null foreign key references Client(client_id),
-	filial_id int not null foreign key references Filial(id_filial),	
-	status_id int not null foreign key references Social_status(status_id),
+	Id int primary key identity(1,1),
+	ClientId int not null foreign key references Client(Id),
+	FilialId int not null foreign key references Filial(Id),	
+	StatusId int not null foreign key references Social_status(Id),
 	balance money not null default(0) check(balance >= 0),
-	account_number nvarchar(20) not null
+	Number nvarchar(20) not null
 )
 create table Card_account
 (
-	card_id int primary key identity(1,1),
-	account_id int foreign key references Account(acc_id),
+	Id int primary key identity(1,1),
+	AccountId int foreign key references Account(Id),
 	balance money  not null default(0) check(balance >= 0),
-	card_number nvarchar(16) not null
+	Number nvarchar(16) not null
 )
