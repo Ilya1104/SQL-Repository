@@ -1,17 +1,16 @@
 use db
 go
 /*first realisation*/
-select count(status_name)as Count_cards_for_status,status_name
-from Card_account join Account on Card_account.account_id=Account.acc_id join Social_status on Account.status_id=Social_status.status_id
+select count(SocialStatus.Name)as Count_cards_for_status,SocialStatus.Name
+from CardAccount join Account on CardAccount.AccountId=Account.Id join SocialStatus on Account.StatusId=SocialStatus.Id
 group by status_name
 
 /*second variant*/
 
-select sS.status_name,
+select sS.Name,
        (select count(*) as cards
-        from Card_account cards_acc
-             join Account A on A.acc_id = cards_acc.account_id
-             join Social_status s on s.status_id = A.status_id
-        where sS.status_id = s.status_id) as Count_cards_for_status
-from Social_status sS;
- 
+        from CardAccount cards_acc
+             join Account A on A.Id = cards_acc.AccountId
+             join SocialStatus s on s.Id = A.StatusId
+        where sS.Id = s.Id) as Count_cards_for_status
+from SocialStatus sS; 
