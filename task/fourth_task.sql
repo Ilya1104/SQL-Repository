@@ -3,7 +3,7 @@ go
 /*first realisation*/
 select count(SocialStatus.Name)as Count_cards_for_status,SocialStatus.Name
 from CardAccount join Account on CardAccount.AccountId=Account.Id join SocialStatus on Account.StatusId=SocialStatus.Id
-group by status_name
+group by SocialStatus.Name
 
 /*second variant*/
 
