@@ -37,7 +37,7 @@ create table Account
 	Id int primary key identity(1,1),
 	ClientId int not null foreign key references Client(Id),
 	FilialId int not null foreign key references Filial(Id),	
-	StatusId int not null foreign key references Social_status(Id),
+	StatusId int not null foreign key references SocialStatus(Id),
 	balance money not null default(0) check(balance >= 0),
 	Number nvarchar(20) not null
 )
