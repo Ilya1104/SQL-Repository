@@ -17,13 +17,16 @@ set @transfeer_sum =
 		from CardAccount join Account on Account.Id=CardAccount.AccountId
 		where Account.Id=@account_id and CardAccount.Id != inserted.Id) + inserted.balance 
 		from inserted)
+			begin tran
 			if((select Account.balance 	from Account where Account.Id = @account_id)<@transfeer_sum)
 				begin
 					print 'Error of transfer'
+					rollback tran
 				end
 			else
 				begin
 					update CardAccount set balance=inserted.balance from inserted where CardAccount.Id = inserted.Id
+					commit tran
 				end
 end
 
@@ -32,20 +35,31 @@ end
 create trigger safety_Account_transfers
 on Account 
 instead of update,insert as
-begin 
-declare
-@transfer_sum money = (select inserted.balance from inserted),
-@account_id int = (select inserted.Id from inserted),
-@sum_on_cards money = (select sum(CardAccount.balance) from inserted,
-CardAccount join Account on Account.Id=CardAccount.AccountId
-where Account.Id= inserted.Id)
-
-	if(@sum_on_cards > @transfer_sum)
-		begin
-			print 'error of transfer'
-		end
-	else
-		begin
-			update Account set balance=@transfer_sum where Id=@account_id
-		end
+begin
+declare 
+        @accountId int,
+	@updatedBalance money,
+        @accountBalanceOnCards money
+		
+declare	cursorId cursor for 
+select Id from inserted
+	open cursorId
+		fetch next from cursorId into @accountId
+		while @@FETCH_STATUS = 0
+			begin
+				set @updatedBalance  =  (select inserted.balance from inserted where inserted.Id=@accountId)
+				if (@accountBalanceOnCards > @updatedBalance)
+					begin
+						print 'Error of transfer'
+					end
+				else
+					begin
+						update Account
+						set balance = @updatedBalance
+						where Account.id = @accountId
+					end
+				fetch next from cursorId into @accountId
+			end
+	close cursorId
+	deallocate cursorId
 end
