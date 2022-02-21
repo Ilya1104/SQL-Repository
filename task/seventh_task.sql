@@ -4,6 +4,7 @@ create proc Safe_money_transfer
 @transfer_sum int,
 @number_of_card nvarchar(16)
 as
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 begin tran
 		if(exists(select Number from CardAccount where Number=@number_of_card))
 			begin		
