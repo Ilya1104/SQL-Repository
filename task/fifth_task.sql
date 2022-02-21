@@ -18,6 +18,6 @@ else
 		print 'Status "'+ @StatusName +'" not found'
 	end
 
-exec add_10_dolars @StatusName = 'пенсионер'
-exec add_10_dolars @StatusName = 'РабоТАЮщий'
-exec add_10_dolars @StatusName = 'твмлытмл'
+exec add_10_dolars @StatusName = N'пенсионер'
+exec add_10_dolars @StatusName = N'РабоТАЮщий'
+exec add_10_dolars @StatusName = N'твмлытмл'
